@@ -33,7 +33,7 @@ automatically:
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.10 to 3.13. The package metadata caps at `<3.14`, because coremltools publishes no 3.14 wheels.
 - macOS 13.0+ (CoreML MLProgram / iOS 17 target)
 - Xcode command-line tools (only needed for `.mlmodelc` compilation)
 
@@ -336,9 +336,11 @@ The plugin detects the language automatically from the audio. No language input 
 
 ## Requirements
 
+- `requests`
 - `ovos-plugin-manager>=2.1.1,<3.0.0`
 - `ovos-utils>=0.8.4,<1.0.0`
 - `coremltools>=7.1`
+- `numpy`
 - `huggingface-hub` *(optional, required for `repo_id` auto-download and zero-config mode)*
 - `pyobjc-framework-CoreML` *(optional, enables ANE/GPU dispatch through the native ObjC framework)*
 
