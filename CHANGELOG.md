@@ -1,36 +1,44 @@
 # Changelog
 
-## [0.2.0a3](https://github.com/TigreGotico/ovos-stt-plugin-coreml/tree/0.2.0a3) (2026-07-30)
+## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.1a1) (2026-09-25)
 
-[Full Changelog](https://github.com/TigreGotico/ovos-stt-plugin-coreml/compare/0.2.0a2...0.2.0a3)
-
-**Merged pull requests:**
-
-- docs: rewrite README in Simplified Technical English [\#11](https://github.com/TigreGotico/ovos-stt-plugin-coreml/pull/11) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.0a2](https://github.com/TigreGotico/ovos-stt-plugin-coreml/tree/0.2.0a2) (2026-04-23)
-
-[Full Changelog](https://github.com/TigreGotico/ovos-stt-plugin-coreml/compare/0.2.0a1...0.2.0a2)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.2.0a3...0.2.1a1)
 
 **Merged pull requests:**
 
-- Fix TDT/RNNT decoding, add PyObjC ANE backend, HF auto-download [\#8](https://github.com/TigreGotico/ovos-stt-plugin-coreml/pull/8) ([JarbasAl](https://github.com/JarbasAl))
+- fix\(ci\): the build-tests workflow does not parse, so it has never run [\#13](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/13) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
-## [0.2.0a1](https://github.com/TigreGotico/ovos-stt-plugin-coreml/tree/0.2.0a1) (2026-03-01)
+## [0.2.0a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.0a3) (2026-07-30)
 
-[Full Changelog](https://github.com/TigreGotico/ovos-stt-plugin-coreml/compare/0.1.0a1...0.2.0a1)
-
-**Merged pull requests:**
-
-- feat: implement dual CTC/TDT model support [\#3](https://github.com/TigreGotico/ovos-stt-plugin-coreml/pull/3) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.1.0a1](https://github.com/TigreGotico/ovos-stt-plugin-coreml/tree/0.1.0a1) (2026-03-01)
-
-[Full Changelog](https://github.com/TigreGotico/ovos-stt-plugin-coreml/compare/0.0.2...0.1.0a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.2.0a2...0.2.0a3)
 
 **Merged pull requests:**
 
-- feat: lm support [\#1](https://github.com/TigreGotico/ovos-stt-plugin-coreml/pull/1) ([JarbasAl](https://github.com/JarbasAl))
+- docs: rewrite README in Simplified Technical English [\#11](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/11) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.0a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.0a2) (2026-04-23)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.2.0a1...0.2.0a2)
+
+**Merged pull requests:**
+
+- Fix TDT/RNNT decoding, add PyObjC ANE backend, HF auto-download [\#8](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/8) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.0a1) (2026-03-01)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.1.0a1...0.2.0a1)
+
+**Merged pull requests:**
+
+- feat: implement dual CTC/TDT model support [\#3](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/3) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.1.0a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.1.0a1) (2026-03-01)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.0.2...0.1.0a1)
+
+**Merged pull requests:**
+
+- feat: lm support [\#1](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/1) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
