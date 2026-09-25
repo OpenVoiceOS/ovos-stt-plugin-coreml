@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+"""Run one CTC transcription through a converted CoreML model, by hand.
+
+This is a tool and not a test suite. It needs macOS with coremltools, a
+converted model directory `parakeet_ctc_coreml/` beside it and the clip
+`yc_first_minute_16k_15s.wav`. Neither input is in this repository, so no
+automated job can run this file.
+
+Usage:
+    python scripts/spot_check_ctc.py
+"""
 import coremltools as ct
 import numpy as np
 import soundfile as sf
