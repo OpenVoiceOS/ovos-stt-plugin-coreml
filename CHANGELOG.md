@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.1a2) (2026-09-26)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.2.1a1...0.2.1a2)
+
+**Merged pull requests:**
+
+- chore: name the manual CTC spot check for what it is [\#12](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/pull/12) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/tree/0.2.1a1) (2026-09-25)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml/compare/0.2.0a3...0.2.1a1)
