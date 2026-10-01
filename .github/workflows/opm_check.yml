@@ -1,0 +1,17 @@
+name: OPM Check
+
+on:
+  pull_request:
+    branches: [dev, master, main]
+  workflow_dispatch:
+
+jobs:
+  opm_check:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/opm-check.yml@dev
+    secrets: inherit
+    with:
+      # named rather than auto-detected: auto-detection reads pyproject.toml
+      # for the entry points, and this repository had none until this commit
+      plugin_type: 'stt'
+      entry_point: 'ovos-stt-plugin-coreml'
+      python_version: '3.13'
