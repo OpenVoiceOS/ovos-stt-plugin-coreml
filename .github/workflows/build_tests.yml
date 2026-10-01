@@ -13,7 +13,10 @@ jobs:
       # cp314 wheel: its newest release tags cp37 to cp313. The matrix stops
       # at 3.13 so it does not go green on a version the plugin cannot run.
       python_versions: '["3.10", "3.11", "3.12", "3.13"]'
-      # No test_path: this repository ships no test suite. `scripts/` holds
-      # `test_inference.py` and `download_test_audio.py`, which are manual
-      # tools. An empty test_path builds and installs the package and skips
-      # pytest, which is what the old file did by hand.
+      # test/ holds the entry-point tests. They load the plugin from the
+      # installed metadata, so a requirement the module imports but nothing
+      # declares makes them fail. Building and installing the package alone
+      # succeeds while the import fails, which is how the missing coremltools
+      # and numpy stayed unseen.
+      install_extras: 'test'
+      test_path: 'test'

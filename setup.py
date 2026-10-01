@@ -9,6 +9,24 @@ PLUGIN_ENTRY_POINT = 'ovos-stt-plugin-coreml = ovos_stt_plugin_coreml:CoremlSTT'
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
+def required(requirements_file):
+    """ Read a requirements file, and drop the comments and the empty lines.
+
+    The requirements are read from the file and not repeated here, so that one
+    list is the only list. A hardcoded copy of this list did not name
+    coremltools or numpy, both of which the package imports at module level,
+    so every install of the package made an entry point that raises.
+    """
+    with open(os.path.join(BASEDIR, requirements_file), 'r') as f:
+        requirements = f.read().splitlines()
+        if 'MYCROFT_LOOSE_REQUIREMENTS' in os.environ:
+            print('USING LOOSE REQUIREMENTS!')
+            requirements = [r.replace('==', '>=').replace('~=', '>=')
+                            for r in requirements]
+        return [pkg for pkg in requirements
+                if pkg.strip() and not pkg.startswith("#")]
+
+
 def get_version():
     """ Find the version of the package"""
     version_file = f'{BASEDIR}/ovos_stt_plugin_coreml/version.py'
@@ -36,14 +54,13 @@ def get_version():
 setup(
     name='ovos-stt-plugin-coreml',
     version=get_version(),
-    url='https://github.com/TigreGotico/ovos-stt-plugin-coreml',
+    url='https://github.com/OpenVoiceOS/ovos-stt-plugin-coreml',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
     license='Apache-2.0',
     packages=['ovos_stt_plugin_coreml'],
-    install_requires=["requests",
-                      "ovos_utils>=0.0.12",
-                      "ovos-plugin-manager>=0.0.1"],
+    install_requires=required("requirements.txt"),
+    extras_require={"test": required("requirements-test.txt")},
     zip_safe=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
