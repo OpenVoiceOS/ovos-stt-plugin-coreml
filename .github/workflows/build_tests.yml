@@ -6,6 +6,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # build-tests.yml below only installs and imports the package, so a
+      # file under scripts/ can carry a SyntaxError or SyntaxWarning without
+      # turning a job red. This compiles every .py file in the repository,
+      # including scripts/, with SyntaxWarning promoted to an error.
+      - run: python3 scripts/check_syntax.py
+
   build:
     uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
     with:

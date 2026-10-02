@@ -48,7 +48,7 @@ class ARPALanguageModel:
 
     @classmethod
     def load(cls, path: str) -> "ARPALanguageModel":
-        """
+        r"""
         Load an ARPA-format language model file and return a populated ARPALanguageModel instance.
         
         Parses unigram and bigram sections from the ARPA file at `path`, converting log10 probabilities to natural-log space and storing per-token probabilities and backoff weights. Lines that cannot be parsed as valid probabilities are skipped; sections are detected by lines beginning with "\" and parsing stops at "\end\".

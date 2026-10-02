@@ -129,21 +129,21 @@ class DecoderWrapper(torch.nn.Module):
             c_in: torch.Tensor,
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
-            Run the wrapped decoder with integer token targets and RNN states, returning the decoder output and the updated hidden and cell states.
-            
-            Parameters:
-                targets (torch.Tensor): Sequence of token IDs for prediction (will be cast to long).
-                target_lengths (torch.Tensor): Lengths for each sequence in `targets` (will be cast to long).
-                h_in (torch.Tensor): Initial hidden state passed to the decoder.
-                c_in (torch.Tensor): Initial cell state passed to the decoder.
-            
-            Returns:
-                Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple containing:
-                    - decoder_output: The decoder's output tensor for the given targets.
-                    - new_h: Updated hidden state tensor produced by the decoder.
-                    - new_c: Updated cell state tensor produced by the decoder.
-            """
-            state = [h_in, c_in]
+        Run the wrapped decoder with integer token targets and RNN states, returning the decoder output and the updated hidden and cell states.
+
+        Parameters:
+            targets (torch.Tensor): Sequence of token IDs for prediction (will be cast to long).
+            target_lengths (torch.Tensor): Lengths for each sequence in `targets` (will be cast to long).
+            h_in (torch.Tensor): Initial hidden state passed to the decoder.
+            c_in (torch.Tensor): Initial cell state passed to the decoder.
+
+        Returns:
+            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A tuple containing:
+                - decoder_output: The decoder's output tensor for the given targets.
+                - new_h: Updated hidden state tensor produced by the decoder.
+                - new_c: Updated cell state tensor produced by the decoder.
+        """
+        state = [h_in, c_in]
         decoder_output, _, new_state = self.module(
             targets=targets.to(dtype=torch.long),
             target_length=target_lengths.to(dtype=torch.long),
@@ -368,19 +368,19 @@ def _coreml_convert(
         compute_units_override: Optional[ct.ComputeUnit] = None,
 ) -> ct.models.MLModel:
     """
-        Convert a traced TorchScript module to a Core ML model using the given export settings.
-        
-        Parameters:
-            traced (torch.jit.ScriptModule): Traced TorchScript module to convert.
-            inputs: Core ML input specifications for the conversion.
-            outputs: Core ML output specifications for the conversion.
-            settings (ExportSettings): Export configuration that supplies default compute units, deployment target, and compute precision.
-            compute_units_override (Optional[ct.ComputeUnit]): If provided, use this compute unit instead of the one in `settings`.
-        
-        Returns:
-            ct.models.MLModel: The converted Core ML model.
-        """
-        cu = compute_units_override if compute_units_override is not None else settings.compute_units
+    Convert a traced TorchScript module to a Core ML model using the given export settings.
+
+    Parameters:
+        traced (torch.jit.ScriptModule): Traced TorchScript module to convert.
+        inputs: Core ML input specifications for the conversion.
+        outputs: Core ML output specifications for the conversion.
+        settings (ExportSettings): Export configuration that supplies default compute units, deployment target, and compute precision.
+        compute_units_override (Optional[ct.ComputeUnit]): If provided, use this compute unit instead of the one in `settings`.
+
+    Returns:
+        ct.models.MLModel: The converted Core ML model.
+    """
+    cu = compute_units_override if compute_units_override is not None else settings.compute_units
     kwargs = {
         "convert_to": "mlprogram",
         "inputs": inputs,
@@ -413,20 +413,20 @@ def _prepare_audio(
         seed: Optional[int],
 ) -> torch.Tensor:
     """
-        Prepare a fixed-length audio tensor for validation.
-        
-        If `validation_audio` is None, returns a random float32 tensor of shape (1, max_samples); if `seed` is provided the RNG is seeded before generation. If `validation_audio` is a path, loads the file, verifies its sample rate matches `sample_rate`, converts multi-channel audio to mono by taking the first channel, and pads or truncates to exactly `max_samples`. Raises `typer.BadParameter` when the file's sample rate does not match or the audio is empty.
-        
-        Parameters:
-            validation_audio (Optional[Path]): Path to an audio file to use for validation, or None to generate random audio.
-            sample_rate (int): Expected sample rate of the validation audio.
-            max_samples (int): Number of audio samples in the returned tensor (length along axis 1).
-            seed (Optional[int]): Optional random seed used only when generating synthetic audio.
-        
-        Returns:
-            torch.Tensor: A float32 tensor with shape (1, max_samples) containing the prepared audio.
-        """
-        if validation_audio is None:
+    Prepare a fixed-length audio tensor for validation.
+
+    If `validation_audio` is None, returns a random float32 tensor of shape (1, max_samples); if `seed` is provided the RNG is seeded before generation. If `validation_audio` is a path, loads the file, verifies its sample rate matches `sample_rate`, converts multi-channel audio to mono by taking the first channel, and pads or truncates to exactly `max_samples`. Raises `typer.BadParameter` when the file's sample rate does not match or the audio is empty.
+
+    Parameters:
+        validation_audio (Optional[Path]): Path to an audio file to use for validation, or None to generate random audio.
+        sample_rate (int): Expected sample rate of the validation audio.
+        max_samples (int): Number of audio samples in the returned tensor (length along axis 1).
+        seed (Optional[int]): Optional random seed used only when generating synthetic audio.
+
+    Returns:
+        torch.Tensor: A float32 tensor with shape (1, max_samples) containing the prepared audio.
+    """
+    if validation_audio is None:
         if seed is not None:
             torch.manual_seed(seed)
         audio = torch.randn(1, max_samples, dtype=torch.float32)
@@ -604,26 +604,26 @@ def convert(
         ),
 ) -> None:
     """
-        Export Parakeet TDT v3 sub-modules to CoreML artifacts using a fixed 15-second audio window.
-        
-        Converts and saves per-component CoreML `.mlpackage` files (preprocessor, encoder, fused mel+encoder, decoder,
-        joint, joint decision head, single-step joint decision) and a metadata.json manifest into `output_dir`.
-        If `--nemo-path` is provided, the model is loaded from that .nemo checkpoint; otherwise `--model-id` is used to
-        download a pretrained NeMo model. Per-component compute units and an optional compute precision can be specified.
-        
-        Parameters:
-            nemo_path (Optional[Path]): Local .nemo checkpoint path to load instead of downloading a pretrained model.
-            model_id (str): Identifier to download the pretrained NeMo model when `nemo_path` is omitted.
-            output_dir (Path): Directory where generated `.mlpackage` files and `metadata.json` will be written.
-            preprocessor_cu (str): Compute unit name for the preprocessor component (ALL, CPU_ONLY, CPU_AND_GPU, CPU_AND_NE).
-            mel_encoder_cu (str): Compute unit name for the fused mel+encoder component.
-            encoder_cu (str): Compute unit name for the standalone encoder component.
-            decoder_cu (str): Compute unit name for the decoder (prediction network) component.
-            joint_cu (str): Compute unit name for the joint network component.
-            joint_decision_cu (str): Compute unit name for the joint+decision head component.
-            joint_decision_single_step_cu (str): Compute unit name for the single-step joint decision component.
-            compute_precision (Optional[str]): Export precision, either "FLOAT32" (default) or "FLOAT16" to reduce weight size.
-        """
+    Export Parakeet TDT v3 sub-modules to CoreML artifacts using a fixed 15-second audio window.
+
+    Converts and saves per-component CoreML `.mlpackage` files (preprocessor, encoder, fused mel+encoder, decoder,
+    joint, joint decision head, single-step joint decision) and a metadata.json manifest into `output_dir`.
+    If `--nemo-path` is provided, the model is loaded from that .nemo checkpoint; otherwise `--model-id` is used to
+    download a pretrained NeMo model. Per-component compute units and an optional compute precision can be specified.
+
+    Parameters:
+        nemo_path (Optional[Path]): Local .nemo checkpoint path to load instead of downloading a pretrained model.
+        model_id (str): Identifier to download the pretrained NeMo model when `nemo_path` is omitted.
+        output_dir (Path): Directory where generated `.mlpackage` files and `metadata.json` will be written.
+        preprocessor_cu (str): Compute unit name for the preprocessor component (ALL, CPU_ONLY, CPU_AND_GPU, CPU_AND_NE).
+        mel_encoder_cu (str): Compute unit name for the fused mel+encoder component.
+        encoder_cu (str): Compute unit name for the standalone encoder component.
+        decoder_cu (str): Compute unit name for the decoder (prediction network) component.
+        joint_cu (str): Compute unit name for the joint network component.
+        joint_decision_cu (str): Compute unit name for the joint+decision head component.
+        joint_decision_single_step_cu (str): Compute unit name for the single-step joint decision component.
+        compute_precision (Optional[str]): Export precision, either "FLOAT32" (default) or "FLOAT16" to reduce weight size.
+    """
     # Runtime CoreML contract keeps U=1 so the prediction net matches the streaming decoder.
     export_settings = ExportSettings(
         output_dir=output_dir,
